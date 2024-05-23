@@ -4,9 +4,9 @@ services:
   symfony-base-nginx:
     container_name: symfony-base-nginx
     build:
-      context: ./nginx
+      dockerfile: docker/nginx/Dockerfile
     volumes:
-      - ../:/app
+      - ./:/app
     ports:
       - 80:80
     depends_on:
@@ -15,6 +15,6 @@ services:
   symfony-base-api-fpm:
     container_name: symfony-base-api-fpm
     build:
-      context: ./php/fpm
+      dockerfile: docker/php/fpm/Dockerfile
     volumes:
-      - ../:/app
+      - ./:/app

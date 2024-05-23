@@ -1,7 +1,6 @@
 # Use PHP-FPM Alpine image
 FROM php:fpm-alpine3.19
 
-
 # Set working directory
 WORKDIR /app
 
@@ -26,7 +25,7 @@ RUN apk --no-cache add \
 RUN docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip intl soap xsl opcache
 
 # XDebug
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY docker/php/fpm/etc/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 RUN pecl install xdebug-3.3.1
 RUN docker-php-ext-enable xdebug
 
