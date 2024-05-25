@@ -1,20 +1,30 @@
 name: symfony-base
 
 services:
-  symfony-base-nginx:
-    container_name: symfony-base-nginx
-    build:
-      dockerfile: docker/nginx/Dockerfile
-    volumes:
-      - ./:/app
-    ports:
-      - 80:80
-    depends_on:
-      - symfony-base-api-fpm
+    symfony-base-nginx:
+        container_name: symfony-base-nginx
+        build:
+            dockerfile: docker/nginx/Dockerfile
+        volumes:
+            - ./:/app
+        ports:
+            - 80:80
+        depends_on:
+            - symfony-base-api-fpm
 
-  symfony-base-api-fpm:
-    container_name: symfony-base-api-fpm
-    build:
-      dockerfile: docker/php/fpm/Dockerfile
-    volumes:
-      - ./:/app
+    symfony-base-api-fpm:
+        container_name: symfony-base-api-fpm
+        build:
+            dockerfile: docker/php/fpm/Dockerfile
+        env_file:
+            - .env.local
+        volumes:
+            - ./:/app
+
+    symfony-base-api-database:
+        container_name: symfony-base-api-database
+        image: postgres:16-alpine
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: symfony_base_api
